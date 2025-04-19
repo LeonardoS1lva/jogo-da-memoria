@@ -1,18 +1,25 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useAudioStore } from 'src/stores/audioStore'
 
 const router = useRouter()
-const gameStarted = ref(false)
+const audioStore = useAudioStore()
+const showSettings = ref(false)
+
+const clickAndToggleSettings = () => {
+  audioStore.playClickSound()
+  showSettings.value = !showSettings.value
+}
+
 const startGame = () => {
-  gameStarted.value = true
+  audioStore.playClickSound()
   router.push('/game')
 }
-const exitGame = () => {
-  if (confirm('Você tem certeza que deseja sair do jogo?')) {
-    window.close()
-  }
-}
+
+onMounted(() => {
+  audioStore.playBackgroundMusic()
+})
 </script>
 
 <template>
@@ -21,8 +28,53 @@ const exitGame = () => {
       <h1 class="text-8xl title">Jogo da Memória 8-bit</h1>
       <p class="subtitle">Teste sua memória e divirta-se!</p>
       <q-btn @click="startGame" label="Novo Jogo" color="primary" class="q-mt-md animated-btn" />
-      <q-btn @click="exitGame" label="Sair" color="secondary" class="q-mt-md animated-btn" />
+      <q-btn
+        @click="clickAndToggleSettings"
+        label="Configurações"
+        color="secondary"
+        class="q-mt-md animated-btn"
+      />
     </div>
+
+    <!-- Modal de Configurações -->
+    <q-dialog v-model="showSettings" persistent>
+      <div class="settings-modal">
+        <h2 class="settings-title">Configurações</h2>
+        <div class="volume-control">
+          <label for="music-volume">Volume da Música:</label>
+          <input
+            id="music-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            v-model="audioStore.musicVolume"
+            @input="audioStore.updateMusicVolume(audioStore.musicVolume)"
+          />
+        </div>
+        <div class="volume-control">
+          <label for="effects-volume">Volume dos Efeitos:</label>
+          <input
+            id="effects-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            v-model="audioStore.effectsVolume"
+            @input="
+              (audioStore.updateEffectsVolume(audioStore.effectsVolume),
+              audioStore.playClickSound())
+            "
+          />
+        </div>
+        <q-btn
+          @click="clickAndToggleSettings"
+          label="Fechar"
+          color="primary"
+          class="q-mt-md animated-btn"
+        />
+      </div>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -109,6 +161,37 @@ h1 {
   background-color: #a71d2a;
   transform: scale(1.1);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+.settings-modal {
+  background: rgba(0, 0, 0, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  margin: auto;
+}
+
+.settings-title {
+  font-family: 'Press Start 2P', system-ui;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.volume-control {
+  margin-bottom: 1.5rem;
+}
+
+.volume-control label {
+  font-family: 'Press Start 2P', system-ui;
+  font-size: 0.8rem;
+  margin-right: 1rem;
+}
+
+.volume-control input[type='range'] {
+  width: 100%;
+  max-width: 300px;
 }
 
 @media (max-width: 600px) {
