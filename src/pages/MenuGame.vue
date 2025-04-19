@@ -24,56 +24,88 @@ onMounted(() => {
 
 <template>
   <q-page class="flex flex-center menu-page">
-    <div class="menu-container text-center q-gutter-md">
-      <h1 class="text-8xl title">Jogo da Memória 8-bit</h1>
-      <p class="subtitle">Teste sua memória e divirta-se!</p>
-      <q-btn @click="startGame" label="Novo Jogo" color="primary" class="q-mt-md animated-btn" />
-      <q-btn
-        @click="clickAndToggleSettings"
-        label="Configurações"
-        color="secondary"
-        class="q-mt-md animated-btn"
-      />
-    </div>
-
-    <!-- Modal de Configurações -->
-    <q-dialog v-model="showSettings" persistent>
-      <div class="settings-modal">
-        <h2 class="settings-title">Configurações</h2>
-        <div class="volume-control">
-          <label for="music-volume">Volume da Música:</label>
-          <input
-            id="music-volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            v-model="audioStore.musicVolume"
-            @input="audioStore.updateMusicVolume(audioStore.musicVolume)"
+    <q-card class="main-card q-pa-lg text-center shadow-15" style="background: rgba(0, 0, 0, 0.8)">
+      <h1 class="text-h1 title non-selectable q-px-md no-margin" style="color: #00ff00">
+        Jogo da Memória 8-bits
+      </h1>
+      <p class="text-subtitle1 non-selectable text-white q-py-md">
+        Teste sua memória e divirta-se!
+      </p>
+      <div class="row justify-center q-col-gutter-md">
+        <div class="col-12 col-md-4">
+          <q-btn
+            @click="startGame"
+            label="Novo Jogo"
+            color="primary"
+            class="text-subtitle1 full-width"
+            style="border-radius: 8px"
+            size="lg"
+            no-caps
           />
         </div>
-        <div class="volume-control">
-          <label for="effects-volume">Volume dos Efeitos:</label>
-          <input
-            id="effects-volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
+        <div class="col-12 col-md-4">
+          <q-btn
+            @click="clickAndToggleSettings"
+            label="Configurações"
+            color="grey-7"
+            class="text-subtitle1 full-width"
+            style="border-radius: 8px"
+            size="lg"
+            no-caps
+          />
+        </div>
+      </div>
+    </q-card>
+
+    <!-- Modal de Configurações -->
+    <q-dialog v-model="showSettings" backdrop-filter="blur(2px)" persistent>
+      <q-card class="settings-card q-pa-md text-white" style="background: rgba(0, 0, 0, 0.95)">
+        <h5 class="text-h5 text-center">Configurações</h5>
+        <div class="q-px-lg">
+          <span>Volume da Música:</span>
+          <q-slider
+            v-model="audioStore.musicVolume"
+            :min="0"
+            :max="1"
+            :step="0.1"
+            @change="audioStore.updateMusicVolume(audioStore.musicVolume)"
+            class="q-mt-md"
+            markers
+            track-color="white"
+            track-size="8px"
+            thumb-size="32px"
+          />
+        </div>
+        <div class="q-mt-md q-px-lg">
+          <span>Volume dos Efeitos:</span>
+          <q-slider
             v-model="audioStore.effectsVolume"
-            @input="
+            :min="0"
+            :max="1"
+            :step="0.1"
+            @change="
               (audioStore.updateEffectsVolume(audioStore.effectsVolume),
               audioStore.playClickSound())
             "
+            class="q-mt-md"
+            markers
+            track-color="white"
+            track-size="8px"
+            thumb-size="32px"
           />
         </div>
-        <q-btn
-          @click="clickAndToggleSettings"
-          label="Fechar"
-          color="primary"
-          class="q-mt-md animated-btn"
-        />
-      </div>
+        <div class="q-px-lg">
+          <q-btn
+            @click="clickAndToggleSettings"
+            label="Fechar"
+            color="primary"
+            class="text-subtitle2 q-my-md full-width"
+            style="border-radius: 8px"
+            size="md"
+            no-caps
+          />
+        </div>
+      </q-card>
     </q-dialog>
   </q-page>
 </template>
@@ -83,14 +115,16 @@ h1 {
   line-height: 1.5;
 }
 
+.main-card {
+  width: 90%;
+  max-width: 1000px;
+  border-radius: 20px;
+}
+
 .menu-page {
   background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
   background-size: 400% 400%;
   animation: gradientBG 10s ease infinite;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 @keyframes gradientBG {
@@ -105,121 +139,19 @@ h1 {
   }
 }
 
-.menu-container {
-  background: rgba(0, 0, 0, 0.85);
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-  width: 1000px;
-  max-width: 90%;
-  text-align: center;
-}
-
 .title {
-  font-family: 'Press Start 2P', system-ui;
-  color: #00ff00;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-  margin-bottom: 1rem;
 }
 
-.subtitle {
-  font-family: 'Press Start 2P', system-ui;
-  color: #ffffff;
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.animated-btn {
-  font-family: 'Press Start 2P', system-ui;
-  text-transform: none;
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s,
-    background-color 0.3s;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 12px;
-}
-
-.animated-btn.primary {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.animated-btn.primary:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.animated-btn.secondary {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.animated-btn.secondary:hover {
-  background-color: #a71d2a;
-  transform: scale(1.1);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.settings-modal {
-  background: rgba(0, 0, 0, 0.9);
-  padding: 2rem;
-  border-radius: 15px;
-  text-align: center;
-  color: #fff;
-  max-width: 400px;
-  margin: auto;
-}
-
-.settings-title {
-  font-family: 'Press Start 2P', system-ui;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.volume-control {
-  margin-bottom: 1.5rem;
-}
-
-.volume-control label {
-  font-family: 'Press Start 2P', system-ui;
-  font-size: 0.8rem;
-  margin-right: 1rem;
-}
-
-.volume-control input[type='range'] {
+.settings-card {
   width: 100%;
-  max-width: 300px;
+  max-width: 400px;
+  border-radius: 15px;
 }
 
 @media (max-width: 600px) {
-  .menu-container {
-    width: 90%;
-    padding: 1.5rem;
-  }
   .title {
     font-size: 2rem;
-  }
-  .subtitle {
-    font-size: 1rem;
-  }
-
-  .animated-btn {
-    font-size: 0.8rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .animated-btn.primary,
-  .animated-btn.secondary {
-    width: 100%;
-    margin: 0.5rem 0;
-  }
-  .animated-btn.primary:hover,
-  .animated-btn.secondary:hover {
-    transform: scale(1);
-    box-shadow: none;
   }
 }
 </style>

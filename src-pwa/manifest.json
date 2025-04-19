@@ -46,8 +46,18 @@
     {
       "src": "screenshots/screenshot_game.png",
       "sizes": "577x455",
+      "type": "image/png"
+    },
+    {
+      "src": "screenshots/screenshot_game_mobile.png",
+      "sizes": "262x269",
       "type": "image/png",
       "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/tela_game.png",
+      "sizes": "1920x953",
+      "type": "image/png"
     },
     {
       "src": "screenshots/tela_game.png",

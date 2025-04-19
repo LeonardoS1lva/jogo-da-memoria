@@ -143,16 +143,6 @@ h1 {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.bg-green {
-  background-color: #28a745 !important;
-  color: #fff !important;
-}
-
-.bg-grey {
-  background-color: #6c757d !important;
-  color: #fff !important;
-}
-
 .game-over {
   margin-top: 2rem;
   text-align: center;
