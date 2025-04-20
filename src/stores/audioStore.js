@@ -5,6 +5,7 @@ export const useAudioStore = defineStore('audio', {
     backgroundMusic: new Audio('/sounds/8_bit_nostalgia.mp3'),
     musicVolume: 0.2,
     effectsVolume: 0.3,
+    isMusicPausedVisibility: false,
   }),
   actions: {
     playBackgroundMusic() {
@@ -31,6 +32,21 @@ export const useAudioStore = defineStore('audio', {
     },
     updateEffectsVolume(volume) {
       this.effectsVolume = volume
+    },
+    handleVisibilityChange() {
+      if (document.hidden) {
+        if (!this.backgroundMusic.paused) {
+          this.backgroundMusic.pause()
+          this.isMusicPausedVisibility = true
+        }
+      } else {
+        if (this.isMusicPausedVisibility) {
+          this.backgroundMusic.play().catch((e) => {
+            console.warn('Erro ao retomar a música:', e)
+          })
+          this.isMusicPausedVisibility = false
+        }
+      }
     },
   },
 })

@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useAudioStore } from 'src/stores/audioStore'
 
 const router = useRouter()
@@ -17,8 +17,17 @@ const startGame = () => {
   router.push('/game')
 }
 
+const handleVisibilityChange = () => {
+  audioStore.handleVisibilityChange()
+}
+
 onMounted(() => {
   audioStore.playBackgroundMusic()
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
 
