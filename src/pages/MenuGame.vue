@@ -32,9 +32,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <q-page class="flex flex-center menu-page">
+  <q-page class="flex flex-center background-animation">
     <q-card class="main-card q-pa-lg text-center shadow-15" style="background: rgba(0, 0, 0, 0.8)">
-      <h1 class="text-h1 title non-selectable q-px-md no-margin" style="color: #00ff00">
+      <h1 class="title-shadow non-selectable q-px-md no-margin" style="color: #00ff00">
         Jogo da Memória 8-bits
       </h1>
       <p class="text-subtitle1 non-selectable text-white q-py-md">
@@ -120,38 +120,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-h1 {
-  line-height: 1.5;
-}
-
 .main-card {
   width: 90%;
   max-width: 1000px;
   border-radius: 20px;
 }
-
-.menu-page {
-  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-  background-size: 400% 400%;
-  animation: gradientBG 10s ease infinite;
-}
-
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.title {
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-}
-
 .settings-card {
   width: 100%;
   max-width: 400px;
@@ -159,7 +132,7 @@ h1 {
 }
 
 @media (max-width: 600px) {
-  .title {
+  .title-shadow {
     font-size: 2rem;
   }
 }
