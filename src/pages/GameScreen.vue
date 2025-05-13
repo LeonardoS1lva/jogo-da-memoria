@@ -1,10 +1,14 @@
 <script setup>
-import { onUnmounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useAudioStore } from 'src/stores/audioStore'
 
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAudioVisibility } from 'src/composable/useAudioVisibility'
 
 const audioStore = useAudioStore()
+const router = useRouter()
+
 const cards = ref([])
 const flippedCards = ref([])
 const matchedCards = ref(0)
@@ -29,6 +33,7 @@ const revealCard = (index) => {
 }
 
 const resetGame = () => {
+  audioStore.playClickSound()
   matchedCards.value = 0
   gameOver.value = false
   initGame()
@@ -50,18 +55,15 @@ const checkMatch = () => {
   flippedCards.value = []
 }
 
-const handleVisibilityChange = () => {
-  audioStore.handleVisibilityChange()
+const backToMenu = () => {
+  audioStore.playClickSound()
+  router.push('/')
 }
 
-onMounted(() => {
-  audioStore.playBackgroundMusic()
-  initGame()
-  document.addEventListener('visibilitychange', handleVisibilityChange)
-})
+useAudioVisibility()
 
-onUnmounted(() => {
-  document.removeEventListener('visibilitychange', handleVisibilityChange)
+onMounted(() => {
+  initGame()
 })
 </script>
 
@@ -98,7 +100,7 @@ onUnmounted(() => {
           </div>
           <div class="col-12 col-md-4">
             <q-btn
-              @click="$router.push('/')"
+              @click="backToMenu"
               label="Voltar ao Menu"
               color="grey-7"
               class="reset-btn q-ml-md full-width"

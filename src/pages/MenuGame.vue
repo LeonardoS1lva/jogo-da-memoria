@@ -1,10 +1,12 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useAudioStore } from 'src/stores/audioStore'
+import { useAudioVisibility } from 'src/composable/useAudioVisibility'
 
 const router = useRouter()
 const audioStore = useAudioStore()
+
 const showSettings = ref(false)
 
 const clickAndToggleSettings = () => {
@@ -17,18 +19,7 @@ const startGame = () => {
   router.push('/game')
 }
 
-const handleVisibilityChange = () => {
-  audioStore.handleVisibilityChange()
-}
-
-onMounted(() => {
-  audioStore.playBackgroundMusic()
-  document.addEventListener('visibilitychange', handleVisibilityChange)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('visibilitychange', handleVisibilityChange)
-})
+useAudioVisibility()
 </script>
 
 <template>
