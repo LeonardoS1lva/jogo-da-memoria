@@ -9,6 +9,7 @@ export function useAudioVisibility() {
   }
 
   onMounted(() => {
+    audioStore.playBackgroundMusic()
     document.addEventListener('visibilitychange', handleVisibilityChange)
   })
 
