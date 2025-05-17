@@ -1,24 +1,45 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useAudioStore } from 'src/stores/audioStore'
 
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAudioVisibility } from 'src/composable/useAudioVisibility'
 
 const audioStore = useAudioStore()
 const router = useRouter()
+const route = useRoute()
+
+const allIcons = [
+  '💣', '💎', '🍀', '🌟', '🎮', '🍄', '👾', '🚀',
+  '🦄', '🧩', '🕹️', '🎲', '🧠', '🦾', '🦖', '🛸',
+  '🐉', '🧙‍♂️', '🧙‍♀️', '🦸‍♂️', '🦸‍♀️', '🧟', '🧛', '🧞',
+  '🧜‍♂️', '🧚‍♀️', '🧝‍♂️', '🧙', '🦹‍♂️', '🦹‍♀️', '🧑‍🚀', '🧑‍🔬', '🧑‍💻', '🧑‍🎤'
+]
+
+const pairsByDifficulty = {
+  easy: 8, // 16 cards
+  medium: 18, // 36 cards
+  hard: 32, // 64 cards
+}
+
+const difficulty = computed(() => route.params.difficulty || 'easy')
+const numPairs = computed(() => pairsByDifficulty[difficulty.value] || 8)
+const icons = computed(() => allIcons.slice(0, numPairs.value))
 
 const cards = ref([])
 const flippedCards = ref([])
 const matchedCards = ref(0)
 const gameOver = ref(false)
-const icons = ['💣', '💎', '🍀', '🌟', '🎮', '🍄', '👾', '🚀']
 
 const initGame = () => {
-  cards.value = [...icons, ...icons]
+  const selectedIcons = icons.value
+  cards.value = [...selectedIcons, ...selectedIcons]
     .map((icon) => ({ icon, revealed: false }))
     .sort(() => Math.random() - 0.5)
+  flippedCards.value = []
+  matchedCards.value = 0
+  gameOver.value = false
 }
 
 const revealCard = (index) => {
@@ -34,8 +55,6 @@ const revealCard = (index) => {
 
 const resetGame = () => {
   audioStore.playClickSound()
-  matchedCards.value = 0
-  gameOver.value = false
   initGame()
 }
 
@@ -46,13 +65,14 @@ const checkMatch = () => {
     if (matchedCards.value === cards.value.length / 2) {
       gameOver.value = true
     }
+    flippedCards.value = []
   } else {
     setTimeout(() => {
       cards.value[firstIndex].revealed = false
       cards.value[secondIndex].revealed = false
+      flippedCards.value = []
     }, 1000)
   }
-  flippedCards.value = []
 }
 
 const backToMenu = () => {
@@ -69,12 +89,20 @@ onMounted(() => {
 
 <template>
   <q-page class="flex flex-center background-animation">
-    <q-card class="card-game text-center q-py-lg shadow-15" style="background: rgba(0, 0, 0, 0.85)">
+    <q-card
+      class="card-game text-center q-py-lg shadow-15 q-mt-md"
+      style="background: rgba(0, 0, 0, 0.85)"
+      :style="cards.length > 36 && 'width: 100%; max-width: 1000px;'"
+    >
       <h1 class="no-margin title-shadow q-pb-md game-title" style="color: #00ff00">
         Jogo da Memória
       </h1>
-      <div class="row justify-center">
-        <div v-for="(card, index) in cards" :key="index" class="col-3">
+      <div :class="cards.length > 36 ? 'container-cards' : 'row justify-center'">
+        <div
+          v-for="(card, index) in cards"
+          :key="index"
+          :class="cards.length > 36 ? '' : cards.length > 16 ? 'col-2' : 'col-3'"
+        >
           <q-btn
             :label="card.revealed ? card.icon : '❓'"
             class="card-btn q-mb-md"
@@ -126,6 +154,13 @@ onMounted(() => {
   font-size: 2rem;
 }
 
+/* Container for the hard difficulty (8x8 grid) */
+.container-cards {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 1px;
+}
+
 .card-btn {
   width: 70px;
   height: 70px;
@@ -151,13 +186,16 @@ onMounted(() => {
 }
 
 @media (max-width: 600px) {
+  .card-game {
+    width: 95%;
+  }
   .game-title {
     font-size: 1.2rem;
   }
   .card-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
   }
 }
 </style>

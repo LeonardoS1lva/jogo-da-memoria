@@ -16,7 +16,7 @@ const clickAndToggleSettings = () => {
 
 const startGame = () => {
   audioStore.playClickSound()
-  router.push('/game')
+  router.push('/chooseDifficulty')
 }
 
 useAudioVisibility()

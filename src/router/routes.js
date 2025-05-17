@@ -3,8 +3,13 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/MenuGame.vue') },
-      { path: '/game', component: () => import('src/pages/GameScreen.vue') },
+      { path: '', component: () => import('src/pages/MenuGame.vue'), name: 'MenuGame' },
+      { path: '/game/:difficulty?', component: () => import('src/pages/GameScreen.vue'), name: 'Game' },
+      {
+        path: '/chooseDifficulty',
+        component: () => import('src/pages/ChooseDifficulty.vue'),
+        name: 'ChooseDifficulty',
+      },
     ],
   },
 
