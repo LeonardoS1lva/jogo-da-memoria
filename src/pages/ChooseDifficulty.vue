@@ -27,7 +27,7 @@ useAudioVisibility()
           color="primary"
           size="md"
           style="border-radius: 8px"
-          @click="selectDifficulty('easy')"
+          @click="selectDifficulty('easy')" 
         />
         <q-btn
           label="Médio"
