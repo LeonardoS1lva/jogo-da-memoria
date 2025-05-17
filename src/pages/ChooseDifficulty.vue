@@ -75,4 +75,10 @@ useAudioVisibility()
     font-size: 1.9rem;
   }
 }
+
+@media (max-width: 400px) {
+  .menu-title {
+    font-size: 1.5rem;
+  }
+}
 </style>
