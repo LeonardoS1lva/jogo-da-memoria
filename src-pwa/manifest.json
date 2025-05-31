@@ -1,7 +1,7 @@
 {
   "orientation": "natural",
   "background_color": "#000000",
-  "theme_color": "#000000",
+  "theme_color": "#0674f1",
   "icons": [
     {
       "src": "icons/icon-128x128.png",
@@ -74,14 +74,15 @@
   "prefer_related_applications": false,
   "screenshots": [
     {
-      "src": "screenshots/screenshot_game.png",
-      "sizes": "577x455",
-      "type": "image/png"
+      "src": "screenshots/screenshot_game.webp",
+      "sizes": "1920x953",
+      "type": "image/webp",
+      "form_factor": "wide"
     },
     {
-      "src": "screenshots/screenshot_game_mobile.png",
-      "sizes": "435x320",
-      "type": "image/png",
+      "src": "screenshots/screenshot_game_mobile.webp",
+      "sizes": "1082x1733",
+      "type": "image/webp",
       "form_factor": "narrow"
     },
     {
@@ -92,8 +93,7 @@
     {
       "src": "screenshots/tela_game.png",
       "sizes": "1920x953",
-      "type": "image/png",
-      "form_factor": "wide"
+      "type": "image/png"
     },
     {
       "src": "screenshots/tela_menu.png",

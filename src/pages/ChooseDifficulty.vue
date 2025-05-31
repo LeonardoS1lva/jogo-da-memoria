@@ -15,9 +15,9 @@ useAudioVisibility()
 </script>
 
 <template>
-  <q-page class="flex flex-center background-animation">
+  <q-page class="flex flex-center background-style">
     <q-card class="level-card q-pa-lg text-center shadow-15" style="background: rgba(0, 0, 0, 0.8)">
-      <h1 class="non-selectable q-pb-md no-margin menu-title" style="color: #00ff00">
+      <h1 class="non-selectable q-pb-md no-margin menu-title text-white title-shadow-2">
         Escolha a Dificuldade
       </h1>
       <div class="row q-col-gutter-md">

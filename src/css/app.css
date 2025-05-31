@@ -8,26 +8,19 @@ h1 {
     line-height: 1.5;
 }
 
-.background-animation {
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
-}
-
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+.background-style {
+    background-image: url("src/assets/bg-stars.webp");
+    background-size: contain;
 }
 
 .title-shadow {
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    text-shadow: 8px 8px 0 rgba(6, 116, 241, 0.8);
+}
+
+.title-shadow-2 {
+    text-shadow: 4px 4px 0 rgba(6, 116, 241, 0.8);
+}
+
+.title-shadow-3 {
+    text-shadow: 2px 2px 0 rgba(6, 116, 241, 0.8);
 }

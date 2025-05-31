@@ -23,12 +23,12 @@ useAudioVisibility()
 </script>
 
 <template>
-  <q-page class="flex flex-center background-animation">
+  <q-page class="flex flex-center background-style">
     <q-card class="main-card q-pa-lg text-center shadow-15" style="background: rgba(0, 0, 0, 0.8)">
-      <h1 class="title-shadow non-selectable q-px-md no-margin" style="color: #00ff00">
+      <h1 class="title-shadow non-selectable q-px-md no-margin text-white">
         Jogo da Memória 8-bits
       </h1>
-      <p class="text-subtitle1 non-selectable text-white q-py-md">
+      <p class="text-subtitle1 non-selectable text-white q-py-md title-shadow-3">
         Teste sua memória e divirta-se!
       </p>
       <div class="row justify-center q-col-gutter-md">
@@ -60,9 +60,9 @@ useAudioVisibility()
     <!-- Modal de Configurações -->
     <q-dialog v-model="showSettings" backdrop-filter="blur(2px)" persistent>
       <q-card class="settings-card q-pa-md text-white" style="background: rgba(0, 0, 0, 0.95)">
-        <h5 class="text-h5 text-center">Configurações</h5>
+        <h5 class="text-h5 text-center title-shadow-2">Configurações</h5>
         <div class="q-px-lg">
-          <span>Volume da Música:</span>
+          <span class="title-shadow-3">Volume da Música:</span>
           <q-slider
             v-model="audioStore.musicVolume"
             :min="0"
@@ -77,7 +77,7 @@ useAudioVisibility()
           />
         </div>
         <div class="q-mt-md q-px-lg">
-          <span>Volume dos Efeitos:</span>
+          <span class="title-shadow-3">Volume dos Efeitos:</span>
           <q-slider
             v-model="audioStore.effectsVolume"
             :min="0"
@@ -125,6 +125,7 @@ useAudioVisibility()
 @media (max-width: 600px) {
   .title-shadow {
     font-size: 2rem;
+    text-shadow: 4px 4px 0 rgba(6, 116, 241, 0.8);
   }
 }
 </style>

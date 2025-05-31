@@ -13,8 +13,8 @@ const route = useRoute()
 const allIcons = [
   '💣', '💎', '🍀', '🌟', '🎮', '🍄', '👾', '🚀',
   '🦄', '🧩', '🕹️', '🎲', '🧠', '🦾', '🦖', '🛸',
-  '🐉', '🧙‍♂️', '🧙‍♀️', '🦸‍♂️', '🦸‍♀️', '🧟', '🧛', '🧞',
-  '🧜‍♂️', '🧚‍♀️', '🧝‍♂️', '🧙', '🦹‍♂️', '🦹‍♀️', '🧑‍🚀', '🧑‍🔬', '🧑‍💻', '🧑‍🎤'
+  '🐉', '🧙‍♂️', '🧙‍♀️', '🦸‍♂️', '🐋', '🧟', '🧛', '🧞',
+  '🧜‍♂️', '🧚‍♀️', '🧝‍♂️', '🌍', '🍕', '🦹‍♀️', '☕', '⚽', '🏠', '❤️'
 ]
 
 const pairsByDifficulty = {
@@ -88,13 +88,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-page class="flex flex-center background-animation">
+  <q-page class="flex flex-center background-style">
     <q-card
       class="card-game text-center q-py-lg shadow-15 q-mt-md"
       style="background: rgba(0, 0, 0, 0.85)"
       :style="cards.length > 36 && 'width: 100%; max-width: 1000px;'"
     >
-      <h1 class="no-margin title-shadow q-pb-md game-title" style="color: #00ff00">
+      <h1 class="no-margin title-shadow q-pb-md game-title text-white title-shadow-2">
         Jogo da Memória
       </h1>
       <div :class="cards.length > 36 ? 'container-cards' : 'row justify-center'">
@@ -106,14 +106,15 @@ onMounted(() => {
           <q-btn
             :label="card.revealed ? card.icon : '❓'"
             class="card-btn q-mb-md"
-            :class="card.revealed ? 'bg-green-5' : 'bg-grey-7'"
+            :class="card.revealed ? 'bg-primary' : 'bg-grey-7'"
             @click="revealCard(index)"
             :disabled="card.revealed || gameOver"
+            style="box-shadow: inset 0 0 0 4px #ffffff;"
           />
         </div>
       </div>
       <div v-if="gameOver" class="text-center q-px-lg">
-        <p class="text-white q-my-md" style="font-size: 1.2rem">Parabéns! Você completou o jogo!</p>
+        <p class="text-white q-my-md title-shadow-3" style="font-size: 1.2rem">Parabéns! Você completou o jogo!</p>
         <div class="row justify-center q-col-gutter-md">
           <div class="col-12 col-md-4">
             <q-btn
